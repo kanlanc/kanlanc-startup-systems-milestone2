@@ -1,3 +1,5 @@
+// pages/api/auth/[...nextauth].js
+
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -19,42 +21,20 @@ See here for an example - https://next-auth.js.org/providers/credentials#example
 const options = {
   providers: [
     CredentialsProvider({
-      
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text" }
+        username: { label: "Username", type: "text", placeholder: "SourabhSingh" },
       },
-      async authorize(credentials) {
-        
-        if (credentials.username) {
-          
-          return { name: credentials.username };
+      async authorize(credentials, req) {
+        const user = { id: credentials.username, name:  credentials.username }
+        if (user) {
+          return user
+        } else {
+          return null
         }
-        l
-        return null;
       }
     })
-  ],
-  session: {
-    
-    jwt: true,
-  },
-  callbacks: {
-    async jwt({ token, user }) {
-      
-      if (user) {
-        token.name = user.name;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-     
-      if (token) {
-        session.user.name = token.name;
-      }
-      return session;
-    }
-  }
+  ], 
 };
 
 export default (req, res) => NextAuth(req, res, options);

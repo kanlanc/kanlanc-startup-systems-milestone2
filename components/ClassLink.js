@@ -18,7 +18,8 @@ const ClassLink = () => {
           />
         </div>
       </div>
-      <div className="field">
+      {classCode!=""?
+      (<div className="field">
         <div className="control">
           <Link href={`/app/${classCode}`}>
             {/* CS5356 TODO 1a. Navigation
@@ -42,7 +43,7 @@ const ClassLink = () => {
             <button className="button is-primary">Go to App</button>
           </Link>
         </div>
-      </div>
+      </div>):""}
     </div>
   );
 };

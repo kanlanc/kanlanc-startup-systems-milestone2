@@ -8,8 +8,9 @@ export const openDb = async () => {
   let dbObject = {
     // Fill in collections
     classCodes: [{ id: 'cs5356', owner: 'ss3396' }],
-    classes: {},
+    classes: {"cs5356":{ id: 'cs5356', owner: 'ss3396' }},
     questions: {}
+    
   };
 
   // Don't edit below this line.
@@ -40,11 +41,16 @@ export const getClassCodes = async (username) => {
 export const createQuestionForClassCode = async (classCode, { question, name }) => {
   const dbObject = await openDb();
 
+  // console.log("this is the",classCode)
+
   if (!dbObject.classes[classCode]) {
+    // console.log(dbObject)
+    // console.log("Here is the issue");
     return null; // Class code doesn't exist
   }
 
   if (!dbObject.questions[classCode]) {
+    // console.log("Here is the issue 2");
     dbObject.questions[classCode] = [];
   }
 
@@ -54,6 +60,8 @@ export const createQuestionForClassCode = async (classCode, { question, name }) 
     name,
     createdAt: new Date().toISOString(),
   };
+
+  // console.log("This is in database", newQuestion);
 
   dbObject.questions[classCode].push(newQuestion);
   await saveData(dbObject);

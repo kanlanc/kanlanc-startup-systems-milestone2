@@ -46,7 +46,7 @@ describe("Class Code Question Endpoints", () => {
   });
 
   it("POST /api/class-codes/:class-codes/question returns 201 when a new question is created", async () => {
-    let response = await req.post(`/api/class-codes/test-class/question`);
+    let response = await req.post(`/api/class-codes/test-class/question`).send({question: 'Why is the sky blue', name: 'anon'});
     expect(response.statusCode).toBe(201);
     expect(response.body.id).not.toBe(null);
 
